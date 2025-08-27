@@ -80,32 +80,27 @@ public class Main {
 
 
     private static void inputNumber() {
-        if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
-            return;
-        }
+        int[] coords = getCoordinates();
+        if (coords == null) return;
 
-        System.out.println("Informe a coluna que em que o número será inserido");
-        var col = runUntilGetValidNumber(0, 8);
-        System.out.println("Informe a linha que em que o número será inserido");
-        var row = runUntilGetValidNumber(0, 8);
+        int col = coords[0];
+        int row = coords[1];
+
         System.out.printf("Informe o número que vai entrar na posição [%s,%s]\n", col, row);
         var value = runUntilGetValidNumber(1, 9);
+
         if (!board.changeValue(col, row, value)){
             System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
         }
     }
 
     private static void removeNumber() {
-        if (isNull(board)){
-            System.out.println("O jogo ainda não foi iniciado iniciado");
-            return;
-        }
+        int[] coords = getCoordinates();
+        if (coords == null) return;
 
-        System.out.println("Informe a coluna que em que o número será inserido");
-        var col = runUntilGetValidNumber(0, 8);
-        System.out.println("Informe a linha que em que o número será inserido");
-        var row = runUntilGetValidNumber(0, 8);
+        int col = coords[0];
+        int row = coords[1];
+
         if (!board.clearValue(col, row)){
             System.out.printf("A posição [%s,%s] tem um valor fixo\n", col, row);
         }
@@ -185,6 +180,20 @@ public class Main {
             current = scanner.nextInt();
         }
         return current;
+    }
+
+    private static int[] getCoordinates() {
+        if (isNull(board)) {
+            System.out.println("O jogo ainda não foi iniciado");
+            return null;
+        }
+
+        System.out.println("Informe a coluna");
+        var col = runUntilGetValidNumber(0, 8);
+        System.out.println("Informe a linha");
+        var row = runUntilGetValidNumber(0, 8);
+
+        return new int[]{col, row};
     }
 
 }
